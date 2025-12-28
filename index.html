@@ -8,31 +8,29 @@
 
 <style>
 html,body{
-  margin:0;
-  height:100%;
-  background:radial-gradient(circle at top,#1b0033,#000);
+  margin:0;height:100%;
+  background:radial-gradient(circle at top,#22003d,#000);
   font-family:Consolas,monospace;
   color:#fff;
   overscroll-behavior:none;
 }
-body{touch-action:pan-y; overflow-x:hidden}
+body{touch-action:pan-y;overflow-x:hidden}
 
-.container{max-width:560px;margin:auto;padding:24px;position:relative;z-index:2}
+.container{max-width:600px;margin:auto;padding:22px;position:relative;z-index:2}
 
 .card{
   background:rgba(255,255,255,.08);
-  border-radius:22px;
+  border-radius:24px;
   padding:26px;
   margin-bottom:26px;
   box-shadow:0 0 30px rgba(255,120,200,.35);
-  animation:pop .7s ease;
+  animation:fade .8s ease;
 }
-
 .hidden{display:none}
 
-@keyframes pop{
-  from{opacity:0;transform:scale(.9) translateY(20px)}
-  to{opacity:1;transform:scale(1)}
+@keyframes fade{
+  from{opacity:0;transform:translateY(25px) scale(.95)}
+  to{opacity:1}
 }
 
 .code{
@@ -41,7 +39,7 @@ body{touch-action:pan-y; overflow-x:hidden}
   padding:18px;
   color:#7cf3ff;
   font-size:14px;
-  line-height:1.6;
+  line-height:1.7;
 }
 
 .p{color:#ff7ad9}
@@ -59,10 +57,9 @@ button{
   color:#fff;
   font-size:15px;
   cursor:pointer;
-  transition:.3s;
   display:block;
+  transition:.3s;
 }
-
 button:hover{transform:scale(1.08);box-shadow:0 0 20px #ff9bdc}
 
 #typing{white-space:pre-line;line-height:1.9}
@@ -75,10 +72,7 @@ button:hover{transform:scale(1.08);box-shadow:0 0 20px #ff9bdc}
   pointer-events:none;
   z-index:0;
 }
-
-@keyframes fall{
-  to{transform:translateY(110vh);opacity:0}
-}
+@keyframes fall{to{transform:translateY(110vh);opacity:0}}
 </style>
 </head>
 
@@ -92,35 +86,35 @@ button:hover{transform:scale(1.08);box-shadow:0 0 20px #ff9bdc}
 
 <div class="card" id="p1">
 <pre class="code">
-<span class="p">import</span> perasaan
-<span class="p">def</span> start():
-  target=<span class="y">"Tira"</span>
-  <span class="g">return</span> jatuh_cinta(target)
+<span class="p">import</span> rasa
+<span class="p">def</span> mulai():
+  tujuan=<span class="y">"Tira"</span>
+  <span class="g">return</span> jatuh_cinta(tujuan)
 </pre>
-<button onclick="next('p2');playMusic()">Execute ▶</button>
+<button onclick="next('p2');playMusic()">Mulai ▶</button>
 </div>
 
 <div class="card hidden" id="p2">
 <pre class="code">
-<span class="p">if</span> Tira.ada():
-  hati.status=<span class="g">"tenang"</span>
+<span class="p">if</span> Tira.hadir:
+  dunia.terasa=<span class="g">"cukup"</span>
 </pre>
 <button onclick="next('p3')">Lanjut</button>
 </div>
 
 <div class="card hidden" id="p3">
 <pre class="code">
-<span class="p">while</span> jarak:
-  aku.memilih(<span class="y">Tira</span>)
+<span class="p">while</span> waktu.berjalan():
+  aku.memilih(Tira)
 </pre>
 <button onclick="choose(1)">Senyum 😊</button>
-<button onclick="choose(2)">Kangen 😳</button>
-<button onclick="choose(3)">Bertahan ❤️</button>
+<button onclick="choose(2)">Tenang 🤍</button>
+<button onclick="choose(3)">Bersama 💖</button>
 </div>
 
 <div class="card hidden" id="p4">
 <pre class="code" id="out"></pre>
-<button onclick="next('p5')">Next</button>
+<button onclick="next('p5')">Teruskan</button>
 </div>
 
 <div class="card hidden" id="p5">
@@ -128,20 +122,20 @@ button:hover{transform:scale(1.08);box-shadow:0 0 20px #ff9bdc}
 <span class="p">try</span>:
   masa_depan+=Tira
 <span class="p">except</span>:
-  dunia.crash()
+  aku.tetap_memilih()
 </pre>
-<button onclick="next('p6')">Baca</button>
+<button onclick="next('p6')">Baca Cerita</button>
 </div>
 
 <div class="card hidden" id="p6">
 <h3>Untuk Tira 🤍</h3>
 <p id="typing"></p>
-<button onclick="next('p7')">Lanjut</button>
+<button onclick="next('p7')">Halaman Terakhir</button>
 </div>
 
 <div class="card hidden" id="p7">
-<h3>FINAL COMMIT 💖</h3>
-<p>Status: <b>kita</b></p>
+<h3>FINAL 💗</h3>
+<p>Status: <b>Kita</b></p>
 <button id="no" onmouseover="escapeNo()">Nggak</button>
 <button onclick="yes()">Iya ❤️</button>
 </div>
@@ -149,44 +143,35 @@ button:hover{transform:scale(1.08);box-shadow:0 0 20px #ff9bdc}
 </div>
 
 <script>
-/* ===== MUSIC ===== */
 function playMusic(){
-  const b=document.getElementById("bgm");
-  if(b.paused)b.play();
+  const a=document.getElementById("bgm");
+  if(a.paused)a.play();
 }
 document.body.addEventListener("touchstart",playMusic,{once:true});
 
-/* ===== NAV ===== */
 function next(id){
   vibrate();
   document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 
-/* ===== SWIPE ===== */
 let sx=0;
 document.addEventListener("touchstart",e=>sx=e.touches[0].clientX);
 document.addEventListener("touchend",e=>{
-  if(e.changedTouches[0].clientX-sx>80){
-    vibrate();
-    autoNext();
-  }
+  if(e.changedTouches[0].clientX-sx>80)autoNext();
 });
 function autoNext(){
   const c=[...document.querySelectorAll('.card')];
   const i=c.findIndex(x=>!x.classList.contains('hidden'));
-  if(i<c.length-1){c[i].classList.add('hidden');c[i+1].classList.remove('hidden')}
+  if(i<c.length-1){vibrate();c[i].classList.add('hidden');c[i+1].classList.remove('hidden')}
 }
 
-/* ===== HAPTIC ===== */
 function vibrate(){navigator.vibrate&&navigator.vibrate(20)}
 
-/* ===== LOGIC ===== */
 function choose(x){
-  const o=document.getElementById("out");
-  o.innerText=x==1?"print('Senyummu amanin hariku')":
-              x==2?"print('Rindu aktif, koneksi stabil')":
-                    "print('Aku bertahan demi Tira')";
+  out.innerText=x==1?"print('Senyummu selalu menemukan jalannya')":
+                x==2?"print('Tenang adalah namamu di hatiku')":
+                      "print('Bersama adalah rumah')";
   next('p4');
 }
 function escapeNo(){
@@ -195,26 +180,75 @@ function escapeNo(){
   b.style.left=Math.random()*80+"%";
   b.style.top=Math.random()*80+"%";
 }
-function yes(){alert("Commit berhasil 💖")}
+function yes(){alert("Pilihan terkunci selamanya 🤍")}
 
-/* ===== TYPING ===== */
-const text=`Tira,
+/* ===== NOVEL TEXT ===== */
+const text=`
+Tira,
 
-Jarak memang ada,
-tapi rasa selalu menemukan jalan.
+Ada pagi yang terasa lebih ringan hanya karena aku tahu
+aku akan menjalani hari ini bersamamu.
+Bukan karena dunia tiba-tiba menjadi mudah,
+tapi karena kehadiranmu membuatku tidak sendirian
+menghadapinya.
 
-Aku mencintaimu dari jauh,
-dengan sabar,
-dengan tenang,
-dan dengan keyakinan.
+Bersamamu,
+aku belajar bahwa cinta tidak selalu harus riuh.
+Ia bisa hadir dalam hal-hal kecil,
+dalam percakapan sederhana,
+dalam diam yang tidak canggung,
+dan dalam tawa yang datang tanpa direncanakan.
 
-Aku memilihmu,
-hari ini dan seterusnya.`;
+Aku menyukai caramu mengisi ruang.
+Kamu tidak mengambil semuanya,
+tidak pula meninggalkan kekosongan.
+Kamu hadir secukupnya,
+namun entah bagaimana selalu tepat.
+
+Hari-hari kita berjalan tanpa peta.
+Kadang lurus,
+kadang berbelok,
+kadang melambat.
+Tapi setiap langkah yang kulalui bersamamu
+selalu terasa benar,
+seolah hatiku tahu
+aku sedang berada di tempat yang seharusnya.
+
+Aku tidak ingin mencintaimu dengan janji besar
+yang diucapkan keras-keras.
+Aku ingin mencintaimu dengan kehadiran.
+Dengan memilihmu setiap hari,
+bahkan di hari-hari biasa
+yang tidak terlihat istimewa bagi siapa pun.
+
+Jika suatu saat dunia terasa bising,
+aku ingin menjadi tempatmu pulang.
+Jika langkahmu goyah,
+aku ingin berjalan di sampingmu.
+Dan jika kita harus diam,
+aku ingin diam itu terasa hangat.
+
+Ini bukan cerita tentang kesempurnaan.
+Ini cerita tentang dua orang
+yang saling memilih untuk tinggal,
+untuk tumbuh,
+dan untuk belajar
+tanpa saling meninggalkan.
+
+Terima kasih sudah bersamaku.
+Terima kasih sudah menjadi bagian dari hari-hariku.
+Jika cinta adalah perjalanan,
+aku ingin terus berjalan,
+selangkah demi selangkah,
+bersamamu,
+Tira. 🤍
+`;
+
 let i=0;
 (function type(){
   if(i<text.length){
     typing.innerHTML+=text[i++];
-    setTimeout(type,35);
+    setTimeout(type,32);
   }
 })();
 
@@ -224,19 +258,15 @@ setInterval(()=>{
   h.className="heart-rain";
   h.innerText=Math.random()>.5?"💗":"💖";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(window.innerWidth<768?5:3)+"s";
+  h.style.animationDuration=(innerWidth<768?5:3)+"s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),6000);
-},window.innerWidth<768?450:300);
+},innerWidth<768?450:300);
 
-/* ===== PWA INLINE ===== */
+/* ===== INLINE PWA ===== */
 if('serviceWorker'in navigator){
-  const sw=`
-self.addEventListener('fetch',e=>{
-  e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))
-});`;
-  const blob=new Blob([sw],{type:'text/javascript'});
-  navigator.serviceWorker.register(URL.createObjectURL(blob));
+  const sw=`self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))})`;
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw])));
 }
 </script>
 
